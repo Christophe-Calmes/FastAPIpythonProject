@@ -2,7 +2,7 @@ from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from database import engine, SessionLocal
 from models.client import Client
-from crud.client import create_client, get_clients, get_client
+from crud.client import create_client, get_clients, get_client, get_client_by_email
 
 # Crée les tables
 Client.metadata.create_all(bind=engine)
@@ -17,8 +17,8 @@ def get_db():
         db.close()
 
 @app.post("/clients/")
-def create_client_api(nom: str, email: str, db: Session = Depends(get_db)):
-    db_client = crud.client.get_client_by_email(db, email=email)
+def create_client_root(nom: str, email: str, db: Session = Depends(get_db)):
+    db_client = get_client_by_email(db, email=email)
     if db_client:
         raise HTTPException(status_code=400, detail="Email déjà utilisé")
     return create_client(db=db, nom=nom, email=email)
