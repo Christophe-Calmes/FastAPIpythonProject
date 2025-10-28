@@ -1,13 +1,12 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
-from database import engine, SessionLocal
+from database import engine, SessionLocal, Base
 from models.client import Client
 from crud.client import create_client, get_clients, get_client, get_client_by_email
-
 # Crée les tables
-Client.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="BankAPI - Étape Client seul")
+app = FastAPI(title="BankAPI")
 
 def get_db():
     db = SessionLocal()
