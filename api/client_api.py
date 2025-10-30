@@ -26,7 +26,7 @@ def read_client(client_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Client non trouvé")
     return db_client
 @client_router.get("/email/{email}")
-def read_client_by_email(client: ClientBase, email: str, db: Session = Depends(get_db)):
+def read_client_by_email(email: str,  db: Session = Depends(get_db)):
     db_client = get_client_by_email(db, email=email)
     if db_client is None:
         raise HTTPException(status_code=404, detail="Client non trouvé")

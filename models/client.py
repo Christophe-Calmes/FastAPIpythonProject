@@ -7,7 +7,7 @@ class Client(Base):
     __tablename__ = "clients"
 
     id = Column(Integer, primary_key=True, index=True)
-    nom = Column(String, index=True)
-    email = Column(String, unique=True, index=True)
+    nom = Column(String(60), index=True)
+    email = Column(String(70), unique=True, index=True)
     date_inscription = Column(DateTime(timezone=True), server_default=func.now())
-    #accounts = relationship("Account", back_populates="owner")
+    accounts = relationship("Account", back_populates="owner")
