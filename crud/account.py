@@ -4,7 +4,7 @@ from schemas.accounts import AccountBase
 from typing import List
 
 # ---(GET) ---
-
+'''
 def get_account(db: Session, account_id: int) -> Account | None:
     """Récupère un seul compte par son ID."""
     return db.query(Account).filter(Account.id == account_id).first()
@@ -12,18 +12,15 @@ def get_account(db: Session, account_id: int) -> Account | None:
 def get_accounts(db: Session, skip: int = 0, limit: int = 100) -> List[Account]:
     """Récupère une liste de comptes avec pagination."""
     return db.query(Account).offset(skip).limit(limit).all()
+'''
 # ---(POST) ---
-def create_account(
-    db: Session, 
-    account_data: AccountBase 
-) -> Account:
+def create_account(db: Session, numero: str, solde: float, client_id: int ) -> Account:
     """Crée un nouveau compte dans la base de données."""
     
-    # Crée une instance du modèle SQLAlchemy en utilisant les données Pydantic
     db_account = Account(
-        numero=account_data.numero,
-        solde=account_data.solde,
-        client_id=account_data.client_id
+        numero=numero,
+        solde=solde,
+        client_id=client_id
     )
     
     db.add(db_account)
